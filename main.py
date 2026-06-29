@@ -35,6 +35,8 @@ MATERIALS = [
 
 DEFAULT_DONT = "Не менять ракурс камеры, дом, крупные деревья и фон. Без людей, без надписей, без логотипов, без чрезмерно бирюзовой воды, без курортного эффекта."
 DEFAULT_FOCUS = "Максимально естественная интеграция в участок и убедительный фотореализм без редизайна существующей архитектуры."
+DEFAULT_PROBLEM_AREAS = "Слева терраса выглядит недостроенной; у дома убрать кучу древесины и строительных остатков; на настиле и по кромкам убрать мелкий визуальный мусор; общую подачу кадра сделать чище и благороднее."
+DEFAULT_ALLOWED_FIXES = "Удалить мусор и случайные предметы; визуально подчистить мелкие дефекты поверхностей; сделать деревянные поверхности аккуратнее и чище; слегка улучшить тональность и общее ощущение finished premium architectural photo без изменения дизайна."
 
 
 def join_items(items):
@@ -49,31 +51,45 @@ def format_styles(styles):
 
 def architecture_lock_ru():
     return """СТРОГИЙ РЕЖИМ СОХРАНЕНИЯ АРХИТЕКТУРЫ:
-Использовать исходное изображение как жёсткий референс и сохранить сцену максимально точно. Не менять архитектуру, геометрию, объёмы, контуры, фасады, окна, двери, кровли, террасы, дорожки, подпорные элементы, границы участка, крупные растения, ракурс камеры, перспективу, кадрирование и композицию. Не передвигать, не масштабировать, не перестраивать, не редизайнить и не переосмыслять никакие архитектурные элементы.
-
-РАЗРЕШЕНЫ ТОЛЬКО ЛОКАЛЬНЫЕ МИНИМАЛЬНЫЕ ПРАВКИ:
-Удалить только визуальный мусор, строительные остатки, случайные предметы, временные элементы и мелкий беспорядок. Допускается только очень деликатная локальная подчистка небольших дефектов поверхности, стыков и кромок без изменения формы, материала, конструкции и дизайна объектов. Всё остальное оставить без изменений."""
+Использовать исходное изображение как жёсткий референс и сохранить сцену максимально точно. Не менять архитектуру, геометрию, объёмы, контуры, фасады, окна, двери, кровли, террасы, дорожки, подпорные элементы, границы участка, крупные растения, ракурс камеры, перспективу, кадрирование и композицию. Не передвигать, не масштабировать, не перестраивать, не редизайнить и не переосмыслять никакие архитектурные элементы."""
 
 
 def architecture_lock_en():
     return """STRICT ARCHITECTURE PRESERVATION MODE:
-Use the original image as a hard reference and preserve the scene as exactly as possible. Do not change the architecture, geometry, massing, outlines, facades, windows, doors, roofs, terraces, paths, retaining elements, site boundaries, major planting, camera angle, perspective, framing, or overall composition. Do not move, resize, rebuild, redesign, or reinterpret any architectural element.
+Use the original image as a hard reference and preserve the scene as exactly as possible. Do not change the architecture, geometry, massing, outlines, facades, windows, doors, roofs, terraces, paths, retaining elements, site boundaries, major planting, camera angle, perspective, framing, or overall composition. Do not move, resize, rebuild, redesign, or reinterpret any architectural element."""
 
-ONLY MINIMAL LOCAL EDITS ARE ALLOWED:
-Remove only visual clutter, construction debris, random objects, temporary elements, and minor mess. Allow only extremely delicate local cleanup of small surface defects, joints, and edges without changing the shape, material, construction, or design of any object. Keep everything else unchanged."""
+
+def local_edits_ru(data):
+    return f"""РАЗРЕШЕНЫ ТОЛЬКО СЛЕДУЮЩИЕ ЛОКАЛЬНЫЕ ПРАВКИ:
+Проблемные зоны кадра: {data['problem_areas']}
+
+Разрешённые локальные улучшения: {data['allowed_fixes']}
+
+Всё, что не относится к перечисленным проблемным зонам, новому водоёму и удалению мусора, оставить без изменений."""
+
+
+def local_edits_en(data):
+    return f"""ONLY THE FOLLOWING LOCAL EDITS ARE ALLOWED:
+Problem areas in the frame: {data['problem_areas']}
+
+Allowed local improvements: {data['allowed_fixes']}
+
+Everything not related to the listed problem areas, the new water feature, and clutter removal must remain unchanged."""
 
 
 def build_cleanup_only_ru(data):
     return f"""ЗАДАЧА:
-Аккуратно отредактировать существующую фотографию участка в режиме cleanup only: убрать визуальный мусор и мелкие следы незавершённости, не меняя архитектуру и общий дизайн сцены.
+Аккуратно отредактировать существующую фотографию участка в режиме cleanup only: убрать визуальный мусор, локальные признаки незавершённости и улучшить только явно указанные проблемные зоны, не меняя архитектуру и общий дизайн сцены.
 
 КОНТЕКСТ:
 Сохранить существующий рельеф, архитектуру, деревья, перспективу камеры, направление света, сезонность и общую атмосферу фотографии. Итоговое изображение должно выглядеть как та же самая сцена после аккуратной профессиональной визуальной подготовки, без ощущения редизайна.
 
 {architecture_lock_ru()}
 
+{local_edits_ru(data)}
+
 СВЕТ И АТМОСФЕРА:
-{data['lighting']}. Спокойная естественная атмосфера, натуральная палитра, без глянцевого CGI-эффекта.
+{data['lighting']}. Спокойная естественная атмосфера, натуральная палитра, без глянцевого CGI-эффекта, без серой мутности, без визуальной грязи.
 
 РЕАЛИЗМ:
 Строгий фотореализм. Сохранить правильный масштаб, перспективу, глубину, естественные отражения, контактные тени и правдоподобные текстуры всех существующих материалов. Изображение должно выглядеть как профессиональная архитектурная фотография той же самой сцены, а не как заново сгенерированный проект.
@@ -82,7 +98,7 @@ def build_cleanup_only_ru(data):
 {data['dont_change']}
 
 КРИТИЧЕСКИЙ АКЦЕНТ:
-Только cleanup и микродоработки без изменений архитектуры. {data['focus']}
+Только cleanup и локальные микродоработки по указанным зонам без изменений архитектуры. {data['focus']}
 """
 
 
@@ -108,11 +124,10 @@ def build_add_water_feature_ru(data):
 
 {architecture_lock_ru()}
 
-ДОПОЛНИТЕЛЬНОЕ ПРАВИЛО:
-Всё, что не относится к новому водоёму и удалению мусора, оставить без изменений.
+{local_edits_ru(data)}
 
 СВЕТ И АТМОСФЕРА:
-{data['lighting']}. Спокойная естественная атмосфера, натуральная палитра, без глянцевого CGI-эффекта.
+{data['lighting']}. Спокойная естественная атмосфера, натуральная палитра, без глянцевого CGI-эффекта, без серой мутности, без визуальной грязи.
 
 РЕАЛИЗМ:
 Строгий фотореализм. Сохранить правильный масштаб, перспективу, глубину, физику воды, естественные отражения, контактные тени, правдоподобные текстуры дерева, камня, грунта и растительности. Изображение должно выглядеть как профессиональная архитектурная фотография уже реализованного объекта.
@@ -121,21 +136,23 @@ def build_add_water_feature_ru(data):
 {data['dont_change']}
 
 КРИТИЧЕСКИЙ АКЦЕНТ:
-Добавить только новый водоём и удалить визуальный мусор, не меняя существующую архитектуру. {data['focus']}
+Добавить только новый водоём и выполнить локальные правки по указанным проблемным зонам, не меняя существующую архитектуру. {data['focus']}
 """
 
 
 def build_cleanup_only_en(data):
     return f"""TASK:
-Carefully edit the existing site photo in cleanup-only mode: remove visual clutter and small signs of unfinished work without changing the architecture or the overall design of the scene.
+Carefully edit the existing site photo in cleanup-only mode: remove visual clutter, local signs of unfinished work, and improve only the explicitly listed problem areas without changing the architecture or the overall design of the scene.
 
 CONTEXT:
 Preserve the existing terrain, architecture, trees, camera perspective, light direction, season, and overall atmosphere of the original photo. The final image should look like the same scene after careful professional visual cleanup, not like a redesigned or regenerated project.
 
 {architecture_lock_en()}
 
+{local_edits_en(data)}
+
 LIGHT AND MOOD:
-{data['lighting']}. Calm natural atmosphere, natural palette, no glossy CGI look.
+{data['lighting']}. Calm natural atmosphere, natural palette, no glossy CGI look, no muddy gray cast, no visual mess.
 
 REALISM:
 Strict photorealism. Preserve accurate scale, perspective, depth, natural reflections, contact shadows, and believable textures of all existing materials. The result should look like a professional architectural photograph of the exact same scene, not a newly generated redesign.
@@ -144,7 +161,7 @@ DO NOT:
 {data['dont_change']}
 
 KEY EMPHASIS:
-Cleanup only and micro-refinements without architectural changes. {data['focus']}
+Cleanup only and local micro-refinements in the listed areas, with no architectural changes. {data['focus']}
 """
 
 
@@ -170,11 +187,10 @@ Additional details: {data['details']}.{duck_note}
 
 {architecture_lock_en()}
 
-ADDITIONAL RULE:
-Everything not related to the new water feature and clutter removal must remain unchanged.
+{local_edits_en(data)}
 
 LIGHT AND MOOD:
-{data['lighting']}. Calm natural atmosphere, natural palette, no glossy CGI look.
+{data['lighting']}. Calm natural atmosphere, natural palette, no glossy CGI look, no muddy gray cast, no visual mess.
 
 REALISM:
 Strict photorealism. Preserve accurate scale, perspective, depth, water physics, natural reflections, contact shadows, and believable textures of timber, stone, soil, and vegetation. The result should look like a professional architectural photograph of a built project.
@@ -183,30 +199,29 @@ DO NOT:
 {data['dont_change']}
 
 KEY EMPHASIS:
-Add only the new water feature and remove visual clutter without changing the existing architecture. {data['focus']}
+Add only the new water feature and perform only the listed local fixes without changing the existing architecture. {data['focus']}
 """
 
 
 def build_edit_prompt(data, mode):
     if mode == "Cleanup only":
-        return "Измени только уборку визуального мусора и микродоработки мелких дефектов. Всё остальное оставь без изменений. Не менять архитектуру, геометрию, объёмы, фасады, окна, дорожки, террасы, перспективу и композицию кадра."
-    return f"Измени только новый водоём и удаление визуального мусора, всё остальное оставь без изменений. Не менять архитектуру, геометрию, объёмы, фасады, окна, дорожки, террасы, перспективу и композицию кадра. Локальная правка: {data['edit_request']}."
+        return f"Измени только следующие проблемные зоны: {data['problem_areas']}. Разрешены только такие локальные правки: {data['allowed_fixes']}. Всё остальное оставь без изменений. Не менять архитектуру, геометрию, объёмы, фасады, окна, дорожки, террасы, перспективу и композицию кадра."
+    return f"Измени только новый водоём и следующие проблемные зоны: {data['problem_areas']}. Разрешены только такие локальные правки: {data['allowed_fixes']}. Всё остальное оставь без изменений. Не менять архитектуру, геометрию, объёмы, фасады, окна, дорожки, террасы, перспективу и композицию кадра. Локальная правка: {data['edit_request']}."
 
 
 st.title("🌿 Генератор мастер-промптов для ландшафтных водоёмов")
-st.write("Версия без AI-усиления: приложение собирает готовые промпты с жёстким сохранением архитектуры и отдельными режимами работы.")
+st.write("Версия без AI-усиления: точечные промпты для cleanup и добавления водоёма с жёстким сохранением архитектуры.")
 
 with st.sidebar:
     st.header("Режим")
     mode = st.radio("Что нужно сделать", ["Cleanup only", "Add water feature"], index=1)
-
     st.header("Как заполнять")
     st.markdown(
         """
-- Cleanup only: только зачистка кадра и микродоработки без изменения архитектуры.
-- Add water feature: добавить новый водоём, но сохранить существующую архитектуру.
-- Можно выбрать несколько стилей сразу.
-- Чем точнее описаны форма, расположение и ограничения, тем стабильнее результат.
+- Укажи проблемные зоны кадра максимально предметно.
+- Отдельно опиши, что именно разрешено улучшать локально.
+- Cleanup only: только зачистка и локальные доработки без изменения архитектуры.
+- Add water feature: добавить новый водоём и одновременно подчистить только указанные зоны.
         """
     )
 
@@ -215,26 +230,15 @@ col1, col2 = st.columns(2)
 with col1:
     feature_type = st.selectbox("Тип объекта", FEATURE_TYPES, disabled=(mode == "Cleanup only"))
     location = st.text_area("Расположение на участке", "Перед домом, справа от террасы", disabled=(mode == "Cleanup only"))
-    shape = st.text_area(
-        "Форма и геометрия",
-        "Вытянутый водоём с мягкой береговой линией, неглубокими заходами и природной геометрией",
-        disabled=(mode == "Cleanup only")
-    )
+    shape = st.text_area("Форма и геометрия", "Вытянутый водоём с мягкой береговой линией, неглубокими заходами и природной геометрией", disabled=(mode == "Cleanup only"))
     styles = st.multiselect("Стили", STYLES, default=["Природный"])
     lighting = st.selectbox("Свет и атмосфера", LIGHTING)
+    problem_areas = st.text_area("Проблемные зоны кадра", DEFAULT_PROBLEM_AREAS, height=140)
 
 with col2:
-    materials = st.multiselect(
-        "Материалы",
-        MATERIALS,
-        default=["Натуральное дерево", "Крупные валуны", "Прибрежные злаки"],
-        disabled=(mode == "Cleanup only")
-    )
-    details = st.text_area(
-        "Дополнительные детали",
-        "Чистая прозрачная вода, сдержанные посадки, благородные натуральные материалы",
-        disabled=(mode == "Cleanup only")
-    )
+    materials = st.multiselect("Материалы", MATERIALS, default=["Натуральное дерево", "Крупные валуны", "Прибрежные злаки"], disabled=(mode == "Cleanup only"))
+    details = st.text_area("Дополнительные детали", "Чистая прозрачная вода, сдержанные посадки, благородные натуральные материалы", disabled=(mode == "Cleanup only"))
+    allowed_fixes = st.text_area("Что разрешено улучшить локально", DEFAULT_ALLOWED_FIXES, height=140)
     dont_change = st.text_area("Что нельзя менять", DEFAULT_DONT)
     focus = st.text_area("Критический акцент", DEFAULT_FOCUS)
     edit_request = st.text_input("Если нужна локальная правка", "форму и линию берега водоёма")
@@ -250,6 +254,8 @@ form_data = {
     "dont_change": dont_change,
     "focus": focus,
     "edit_request": edit_request,
+    "problem_areas": problem_areas,
+    "allowed_fixes": allowed_fixes,
 }
 
 st.divider()
@@ -267,15 +273,15 @@ if st.button("Собрать промпты", type="primary"):
     tab1, tab2, tab3 = st.tabs(["RU prompt", "EN prompt", "Prompt для правки"])
 
     with tab1:
-        st.text_area("Готовый промпт на русском", ru_prompt, height=560)
+        st.text_area("Готовый промпт на русском", ru_prompt, height=620)
         st.download_button("Скачать RU prompt", ru_prompt, file_name="ru_prompt.txt")
 
     with tab2:
-        st.text_area("Готовый промпт на английском", en_prompt, height=560)
+        st.text_area("Готовый промпт на английском", en_prompt, height=620)
         st.download_button("Скачать EN prompt", en_prompt, file_name="en_prompt.txt")
 
     with tab3:
-        st.text_area("Короткий промпт для итерационной правки", edit_prompt, height=140)
+        st.text_area("Короткий промпт для итерационной правки", edit_prompt, height=180)
         st.download_button("Скачать prompt для правки", edit_prompt, file_name="edit_prompt.txt")
 else:
     st.info("Нажми «Собрать промпты», чтобы увидеть результат.")
