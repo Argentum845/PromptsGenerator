@@ -66,6 +66,9 @@ def build_ru_prompt(data):
 {data['materials']}.
 Дополнительные детали: {data['details']}.{duck_note}
 
+ОЧИСТКА И АККУРАТНАЯ ДОРАБОТКА:
+Убрать из кадра только визуальный мусор, строительные остатки, случайные предметы, временные элементы и общий беспорядок. Допускаются только небольшие деликатные доработки, которые делают существующие постройки, покрытия, кромки, стыки и детали визуально более аккуратными, целостными и завершёнными. Не менять архитектуру, геометрию, объёмы, фасады, окна, террасы, дорожки, планировку участка, пропорции объектов, перспективу камеры и общую композицию сцены. Не делать редизайн и не переосмыслять архитектурные решения, а только мягко подчистить и слегка довести существующее состояние до более дорогого визуального вида.
+
 СВЕТ И АТМОСФЕРА:
 {data['lighting']}. Спокойная премиальная атмосфера, естественная палитра, без глянцевого CGI-эффекта.
 
@@ -99,6 +102,9 @@ STYLE:
 MATERIALS AND DETAILS:
 {data['materials']}.
 Additional details: {data['details']}.{duck_note}
+
+CLEANUP AND SUBTLE FINISHING:
+Remove only visual clutter, construction debris, random objects, temporary elements, and general mess from the scene. Allow only small, delicate refinements that make the existing buildings, surfaces, edges, joints, and details look cleaner, more cohesive, and more finished. Do not change the architecture, geometry, massing, facades, windows, terraces, paths, site layout, object proportions, camera perspective, or overall composition of the scene. Do not redesign or reinterpret the architecture; only perform a gentle cleanup and slight finishing pass for a more polished, premium-looking result.
 
 LIGHT AND MOOD:
 {data['lighting']}. Calm premium atmosphere, natural palette, no glossy CGI look.
