@@ -12,13 +12,10 @@ FEATURE_TYPES = [
 ]
 
 STYLES = [
-    "Премиальный минимализм",
-    "Architectural landscape",
-    "Editorial architectural photo",
-    "High-end resort restraint",
-    "Скандинавский",
-    "Современный ландшафт",
     "Природный",
+    "Скандинавский",
+    "Премиальный минимализм",
+    "Современный ландшафт",
 ]
 
 LIGHTING = [
@@ -37,20 +34,9 @@ MATERIALS = [
 ]
 
 DEFAULT_DONT = "Не менять ракурс камеры, дом, крупные деревья и фон. Без людей, без надписей, без логотипов, без чрезмерно бирюзовой воды, без курортного эффекта."
-DEFAULT_FOCUS = (
-    "Изображение должно выглядеть как high-end editorial architectural visualization: "
-    "дорого, глубоко, чисто, выразительно, с благородной тональностью материалов, "
-    "контролируемым светом, богатой пространственной глубиной и ощущением "
-    "finished premium project без редизайна существующей архитектуры."
-)
+DEFAULT_FOCUS = "Максимально естественная интеграция в участок и убедительный фотореализм без редизайна существующей архитектуры."
 DEFAULT_PROBLEM_AREAS = "Слева терраса выглядит недостроенной; у дома убрать кучу древесины и строительных остатков; на настиле и по кромкам убрать мелкий визуальный мусор; общую подачу кадра сделать чище и благороднее."
-DEFAULT_ALLOWED_FIXES = (
-    "Удалить мусор и случайные предметы; визуально подчистить мелкие дефекты поверхностей; "
-    "сделать материалы чище, ровнее и благороднее; усилить архитектурную выразительность кадра "
-    "за счёт более дорогой тональности, более глубокого света, более чистых стыков, "
-    "более собранной композиции посадок и более премиального ощущения finished project "
-    "без изменения архитектуры и геометрии."
-)
+DEFAULT_ALLOWED_FIXES = "Удалить мусор и случайные предметы; визуально подчистить мелкие дефекты поверхностей; сделать деревянные поверхности аккуратнее и чище; слегка улучшить тональность и общее ощущение finished premium architectural photo без изменения дизайна."
 
 
 def join_items(items):
@@ -59,7 +45,7 @@ def join_items(items):
 
 def format_styles(styles):
     if not styles:
-        return "Премиальный минимализм"
+        return "Природный"
     return ", ".join([x.strip() for x in styles if x and x.strip()])
 
 
@@ -103,10 +89,10 @@ def build_cleanup_only_ru(data):
 {local_edits_ru(data)}
 
 СВЕТ И АТМОСФЕРА:
-{data['lighting']}. Свет должен выглядеть дорогим и художественно контролируемым, как в premium editorial architectural photography: мягкий объёмный свет, благородная тональность, чистый воздух, хорошая читаемость планов, выразительные тени, без серой мутности, без плоского пасмурного ощущения, без CGI-глянца.
+{data['lighting']}. Спокойная естественная атмосфера, натуральная палитра, без глянцевого CGI-эффекта, без серой мутности, без визуальной грязи.
 
 РЕАЛИЗМ:
-Строгий фотореализм. Сохранить правильный масштаб, перспективу, глубину, естественные отражения, контактные тени и правдоподобные текстуры всех существующих материалов. Изображение должно выглядеть не как обычный документальный снимок участка, а как high-end editorial architectural visualization: более выразительная композиция, более дорогая подача материалов, более собранная сценография и ощущение завершённого премиального проекта.
+Строгий фотореализм. Сохранить правильный масштаб, перспективу, глубину, естественные отражения, контактные тени и правдоподобные текстуры всех существующих материалов. Изображение должно выглядеть как профессиональная архитектурная фотография той же самой сцены, а не как заново сгенерированный проект.
 
 ЧТО НЕЛЬЗЯ:
 {data['dont_change']}
@@ -141,10 +127,10 @@ def build_add_water_feature_ru(data):
 {local_edits_ru(data)}
 
 СВЕТ И АТМОСФЕРА:
-{data['lighting']}. Свет должен выглядеть дорогим и художественно контролируемым, как в premium editorial architectural photography: мягкий объёмный свет, благородная тональность, чистый воздух, хорошая читаемость планов, выразительные тени, без серой мутности, без плоского пасмурного ощущения, без CGI-глянца.
+{data['lighting']}. Спокойная естественная атмосфера, натуральная палитра, без глянцевого CGI-эффекта, без серой мутности, без визуальной грязи.
 
 РЕАЛИЗМ:
-Строгий фотореализм. Сохранить правильный масштаб, перспективу, глубину, физику воды, естественные отражения, контактные тени, правдоподобные текстуры дерева, камня, грунта и растительности. Изображение должно выглядеть не как обычный реалистичный img2img-результат, а как high-end editorial architectural visualization: более выразительная композиция, более дорогая подача материалов, более благородная тональность, более собранная сценография и ощущение завершённого премиального проекта.
+Строгий фотореализм. Сохранить правильный масштаб, перспективу, глубину, физику воды, естественные отражения, контактные тени, правдоподобные текстуры дерева, камня, грунта и растительности. Изображение должно выглядеть как профессиональная архитектурная фотография уже реализованного объекта.
 
 ЧТО НЕЛЬЗЯ:
 {data['dont_change']}
@@ -166,10 +152,10 @@ Preserve the existing terrain, architecture, trees, camera perspective, light di
 {local_edits_en(data)}
 
 LIGHT AND MOOD:
-{data['lighting']}. The light should feel expensive and artistically controlled, like premium editorial architectural photography: soft volumetric light, refined tonality, clean air, clear spatial readability, expressive shadows, no muddy gray cast, no flat overcast feel, no glossy CGI look.
+{data['lighting']}. Calm natural atmosphere, natural palette, no glossy CGI look, no muddy gray cast, no visual mess.
 
 REALISM:
-Strict photorealism. Preserve accurate scale, perspective, depth, natural reflections, contact shadows, and believable textures of all existing materials. The result should look not like an ordinary documentary site photo, but like a high-end editorial architectural visualization with stronger composition, more premium material rendering, more controlled scene styling, and a finished premium-project feeling.
+Strict photorealism. Preserve accurate scale, perspective, depth, natural reflections, contact shadows, and believable textures of all existing materials. The result should look like a professional architectural photograph of the exact same scene, not a newly generated redesign.
 
 DO NOT:
 {data['dont_change']}
@@ -204,10 +190,10 @@ Additional details: {data['details']}.{duck_note}
 {local_edits_en(data)}
 
 LIGHT AND MOOD:
-{data['lighting']}. The light should feel expensive and artistically controlled, like premium editorial architectural photography: soft volumetric light, refined tonality, clean air, clear spatial readability, expressive shadows, no muddy gray cast, no flat overcast feel, no glossy CGI look.
+{data['lighting']}. Calm natural atmosphere, natural palette, no glossy CGI look, no muddy gray cast, no visual mess.
 
 REALISM:
-Strict photorealism. Preserve accurate scale, perspective, depth, water physics, natural reflections, contact shadows, and believable textures of timber, stone, soil, and vegetation. The result should look not like an ordinary realistic img2img output, but like a high-end editorial architectural visualization with stronger composition, more premium material rendering, more refined tonality, more controlled scene styling, and a finished premium-project feeling.
+Strict photorealism. Preserve accurate scale, perspective, depth, water physics, natural reflections, contact shadows, and believable textures of timber, stone, soil, and vegetation. The result should look like a professional architectural photograph of a built project.
 
 DO NOT:
 {data['dont_change']}
@@ -219,12 +205,12 @@ Add only the new water feature and perform only the listed local fixes without c
 
 def build_edit_prompt(data, mode):
     if mode == "Cleanup only":
-        return f"Измени только следующие проблемные зоны: {data['problem_areas']}. Разрешены только такие локальные правки: {data['allowed_fixes']}. Сделай подачу кадра более дорогой, глубокой и архитектурно выразительной, как в premium editorial architectural visualization. Всё остальное оставь без изменений. Не менять архитектуру, геометрию, объёмы, фасады, окна, дорожки, террасы, перспективу и композицию кадра."
-    return f"Измени только новый водоём и следующие проблемные зоны: {data['problem_areas']}. Разрешены только такие локальные правки: {data['allowed_fixes']}. Сделай подачу кадра более дорогой, глубокой и архитектурно выразительной, как в premium editorial architectural visualization. Всё остальное оставь без изменений. Не менять архитектуру, геометрию, объёмы, фасады, окна, дорожки, террасы, перспективу и композицию кадра. Локальная правка: {data['edit_request']}."
+        return f"Измени только следующие проблемные зоны: {data['problem_areas']}. Разрешены только такие локальные правки: {data['allowed_fixes']}. Всё остальное оставь без изменений. Не менять архитектуру, геометрию, объёмы, фасады, окна, дорожки, террасы, перспективу и композицию кадра."
+    return f"Измени только новый водоём и следующие проблемные зоны: {data['problem_areas']}. Разрешены только такие локальные правки: {data['allowed_fixes']}. Всё остальное оставь без изменений. Не менять архитектуру, геометрию, объёмы, фасады, окна, дорожки, террасы, перспективу и композицию кадра. Локальная правка: {data['edit_request']}."
 
 
 st.title("🌿 Генератор мастер-промптов для ландшафтных водоёмов")
-st.write("Версия без AI-усиления: точечные промпты для cleanup и добавления водоёма с жёстким сохранением архитектуры и более дорогой визуальной подачей.")
+st.write("Версия без AI-усиления: точечные промпты для cleanup и добавления водоёма с жёстким сохранением архитектуры.")
 
 with st.sidebar:
     st.header("Режим")
@@ -236,7 +222,6 @@ with st.sidebar:
 - Отдельно опиши, что именно разрешено улучшать локально.
 - Cleanup only: только зачистка и локальные доработки без изменения архитектуры.
 - Add water feature: добавить новый водоём и одновременно подчистить только указанные зоны.
-- Для более дорогой картинки оставляй в стилях architectural и editorial формулировки.
         """
     )
 
@@ -246,26 +231,13 @@ with col1:
     feature_type = st.selectbox("Тип объекта", FEATURE_TYPES, disabled=(mode == "Cleanup only"))
     location = st.text_area("Расположение на участке", "Перед домом, справа от террасы", disabled=(mode == "Cleanup only"))
     shape = st.text_area("Форма и геометрия", "Вытянутый водоём с мягкой береговой линией, неглубокими заходами и природной геометрией", disabled=(mode == "Cleanup only"))
-    styles = st.multiselect(
-        "Стили",
-        STYLES,
-        default=["Премиальный минимализм", "Architectural landscape", "Editorial architectural photo"]
-    )
+    styles = st.multiselect("Стили", STYLES, default=["Природный"])
     lighting = st.selectbox("Свет и атмосфера", LIGHTING)
     problem_areas = st.text_area("Проблемные зоны кадра", DEFAULT_PROBLEM_AREAS, height=140)
 
 with col2:
-    materials = st.multiselect(
-        "Материалы",
-        MATERIALS,
-        default=["Натуральное дерево", "Крупные валуны", "Прибрежные злаки"],
-        disabled=(mode == "Cleanup only")
-    )
-    details = st.text_area(
-        "Дополнительные детали",
-        "Чистая вода с естественной глубиной и красивыми отражениями, layered planting, выразительные крупные камни, благородные натуральные материалы, дорогая архитектурная подача, ощущение finished premium landscape project",
-        disabled=(mode == "Cleanup only")
-    )
+    materials = st.multiselect("Материалы", MATERIALS, default=["Натуральное дерево", "Крупные валуны", "Прибрежные злаки"], disabled=(mode == "Cleanup only"))
+    details = st.text_area("Дополнительные детали", "Чистая прозрачная вода, сдержанные посадки, благородные натуральные материалы", disabled=(mode == "Cleanup only"))
     allowed_fixes = st.text_area("Что разрешено улучшить локально", DEFAULT_ALLOWED_FIXES, height=140)
     dont_change = st.text_area("Что нельзя менять", DEFAULT_DONT)
     focus = st.text_area("Критический акцент", DEFAULT_FOCUS)
