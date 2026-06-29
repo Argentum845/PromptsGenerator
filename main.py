@@ -1,5 +1,4 @@
 import streamlit as st
-from openai import OpenAI
 
 st.set_page_config(page_title="Генератор промптов для водоёмов", page_icon="🌿", layout="wide")
 
